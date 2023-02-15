@@ -1,32 +1,40 @@
 <template>
   <div>
-    Vue app
-    <Hello @greet="increment" />
-    Count: {{ count }}
+    <div v-for="todo in todos" :key="todo.id" data-test="todo">
+      {{ todo.text }}
+    </div>
+
+    <form data-test="form" @submit.prevent="createTodo">
+      <input data-test="new-todo" v-model="newTodo" />
+    </form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Hello from './Hello.vue'
-
-export default defineComponent({
-  name: 'App',
-
-  components: {
-    Hello
-  },
+export default {
+  name: 'TodoApp',
 
   data() {
     return {
-      count: 0
+      newTodo: '',
+      todos: [
+        {
+          id: 1,
+          text: 'Go to a Grocery store',
+          completed: false
+        }
+      ]
     }
   },
 
   methods: {
-    increment() {
-      this.count += 1
+    createTodo() {
+      this.todos.push({
+        id: 2,
+        text: this.newTodo,
+        completed: false
+      })
     }
   }
-})
+}
 </script>
